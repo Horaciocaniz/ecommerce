@@ -1,9 +1,10 @@
+# .github/workflows/deploy.yml
 name: Deploy via FTP (InfinityFree)
 
 on:
   push:
-    branches: [ "main" ]     # se ejecuta al hacer push a main
-  workflow_dispatch:          # permite ejecutarlo manualmente desde la pestaña Actions
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   ftp-deploy:
@@ -12,6 +13,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Paso de depuración (opcional, ayuda mucho si vuelve a fallar)
+      - name: Debug paths
+        run: |
+          pwd
+          ls -la
+          echo "---- subdir ecommerce (si existe) ----"
+          ls -la ecommerce || true
+
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -19,17 +28,15 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
 
-          # ⬇️ AJUSTA ESTOS DOS CAMINOS SEGÚN TU REPO ⬇️
-          # Si tu código está en una carpeta "ecommerce" dentro del repo:
-          local-dir: ./ecommerce/
+          # 👇 Tu repo no tiene carpeta "ecommerce" dentro; usa la raíz
+          local-dir: ./
+          # 👇 Sube al docroot/carpeta del hosting
           server-dir: /htdocs/ecommerce/
-          # Si tu código está en la raíz del repo, usa en cambio:
-          # local-dir: ./
-          # server-dir: /htdocs/
 
-          # No sobrescribas media/logs en cada deploy
+          # No sobrescribir media/logs/ci
           exclude: |
             **/uploads/**
             **/logs/**
             **/.git**/
             **/.github/**
+            **/.vscode/**
