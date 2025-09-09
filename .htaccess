@@ -1,0 +1,49 @@
+# ============================
+# 🔹 Seguridad básica
+# ============================
+
+# Evitar listado de directorios
+Options -Indexes
+
+# Bloquear acceso a archivos sensibles
+<FilesMatch "(^\.|config\.php|\.env|composer\.json|composer\.lock)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Bloquear acceso directo a carpetas internas
+RedirectMatch 403 ^(controllers|models|config)/
+
+# ============================
+# 🔹 Bloquear PHP en /uploads/
+# ============================
+<If "%{REQUEST_URI} =~ m#^/ecommerce/uploads/#">
+    <FilesMatch "\.php$">
+        Require all denied
+    </FilesMatch>
+</If>
+
+# ============================
+# 🔹 URLs limpias (opcional)
+# ============================
+RewriteEngine On
+RewriteBase /ecommerce/
+
+# Bloquear acceso a .htaccess
+<Files ".htaccess">
+    Require all denied
+</Files>
+
+# Si no existe archivo o carpeta, redirigir a index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
+Options -MultiViews
+DirectoryIndex index.php
+
+# Páginas de error (rutas absolutas desde la raíz del host)
+ErrorDocument 404 /ecommerce/views/errors/404.php
+ErrorDocument 500 /ecommerce/views/errors/500.php
+
+# Para evitar negociaciones raras de URL en Apache
+Options -MultiViews

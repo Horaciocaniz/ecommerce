@@ -1,0 +1,54 @@
+/* ===== Tablas responsive tipo tarjetas SOLO para pedidos ===== */
+@media (max-width: 768px) {
+    .pedidos thead {
+        display: none;
+    }
+    .pedidos, 
+    .pedidos tbody, 
+    .pedidos tr, 
+    .pedidos td {
+        display: block;
+        width: 100%;
+    }
+    .pedidos tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        background: #fff;
+    }
+    .pedidos td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    .pedidos td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0.5rem;
+        width: 45%;
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    /* Para la columna Acciones: ocultar label automático */
+    .pedidos td.acciones-td::before {
+        content: "";
+    }
+
+    /* Mostrar un label manual solo en mobile */
+    .pedidos td.acciones-td .acciones-label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+        color: #333;
+    }
+}
+
+/* En desktop, ocultar el label manual de acciones */
+@media (min-width: 769px) {
+    .pedidos td.acciones-td .acciones-label {
+        display: none;
+    }
+}

@@ -1,0 +1,29 @@
+/* Hero moderno */
+.hero-modern {
+  background: linear-gradient(to bottom right, #f8fbff, #eef6ff);
+  padding: 5rem 0;
+}
+
+.hero-modern h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.hero-modern h1 span {
+  color: #2563eb; /* Azul moderno */
+}
+
+.hero-modern p {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Badge nueva colección */
+.badge-modern {
+  background-color: #e0edff;
+  color: #2563eb;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.4rem 0.8rem;
+  border-radius: 50rem;
+}
