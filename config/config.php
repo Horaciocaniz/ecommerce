@@ -7,7 +7,7 @@ define('NOMBRE_SITIO', 'ProvasSport');
 define('MONEDA', 'GTQ');
 
 // En desarrollo con ngrok:
-define('SITE_URL', 'https://641c51c1623e.ngrok-free.app/ecommerce/'); // termina con /
+//define('SITE_URL', 'https://641c51c1623e.ngrok-free.app/ecommerce/'); // termina con /
 
 
 

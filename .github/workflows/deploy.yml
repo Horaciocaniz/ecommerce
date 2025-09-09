@@ -1,0 +1,35 @@
+name: Deploy via FTP (InfinityFree)
+
+on:
+  push:
+    branches: [ "main" ]     # se ejecuta al hacer push a main
+  workflow_dispatch:          # permite ejecutarlo manualmente desde la pestaña Actions
+
+jobs:
+  ftp-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: FTP Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server:   ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+
+          # ⬇️ AJUSTA ESTOS DOS CAMINOS SEGÚN TU REPO ⬇️
+          # Si tu código está en una carpeta "ecommerce" dentro del repo:
+          local-dir: ./ecommerce/
+          server-dir: /htdocs/ecommerce/
+          # Si tu código está en la raíz del repo, usa en cambio:
+          # local-dir: ./
+          # server-dir: /htdocs/
+
+          # No sobrescribas media/logs en cada deploy
+          exclude: |
+            **/uploads/**
+            **/logs/**
+            **/.git**/
+            **/.github/**
